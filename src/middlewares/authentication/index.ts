@@ -2,10 +2,14 @@ import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { MySQLClient } from "backends/mysql/client";
 
+interface extRequest extends Request {
+  user: any;
+}
+
 export const authMiddleware =
   (mysqlClient: MySQLClient) =>
   async (
-    request: Request,
+    request: extRequest,
     response: Response,
     next: NextFunction
   ): Promise<void> => {

@@ -1,5 +1,5 @@
 // import autoBind from "auto-bind";
-const autoBind = (x) => import("auto-bind");
+// const autoBind = import("auto-bind");
 import { Request, Response } from "express";
 import { injectable, inject } from "inversify";
 import { UserService } from "./service";
@@ -13,7 +13,7 @@ interface extRequest extends Request {
 @injectable()
 export class UserController {
   constructor(@inject(TYPES.UserService) private userService: UserService) {
-    autoBind(this);
+    // autoBind(this);
   }
 
   public async getOne(req: Request, res: Response): Promise<void> {
