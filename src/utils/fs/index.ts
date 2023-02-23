@@ -23,11 +23,11 @@ export const readFileAsync = (filePath: fs.PathLike) =>
     });
   });
 
-export const encodeBase64 = async (filePath: string): Promise<string> => {
-  const data = await readFile(filePath);
-  return Buffer.from(data).toString("base64");
-};
+// export const encodeBase64 = async (filePath: string): Promise<string> => {
+//   const data = await readFile(filePath);
+//   return Buffer.from(data).toString("base64");
+// };
 
-export const getFsFileName = (file: any): string => {
-  return `${file.user_id}-${file.user_role}-${file.originalname}`;
-};
+// export const getFsFileName = (file: any): string => {
+//   return `${file.user_id}-${file.user_role}-${file.originalname}`;
+// };

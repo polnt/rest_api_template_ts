@@ -15,7 +15,7 @@
       // "mongodb",
       // "multer",
       // "pg",
-      // "jest"
+      "jest"
     ],
     "typeRoots": [
       "./src/custom_typings/*",

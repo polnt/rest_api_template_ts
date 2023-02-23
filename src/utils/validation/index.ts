@@ -10,7 +10,7 @@ export const checkEmailDuplicate = async (
         email
       );
       const response = MySQLClient.processRows(rows);
-      if (response && response.length) {
+      if (response.length) {
         connection.release();
         return {
           status: 409,
@@ -21,7 +21,7 @@ export const checkEmailDuplicate = async (
       connection.release();
       return { status: 404, message: "Email not found" };
     }
-    return { status: 404, message: "Invalid email" };
+    return { status: 400, message: "Invalid email" };
   } catch (err) {
     return { status: 500, message: "Client connection error" };
   }
