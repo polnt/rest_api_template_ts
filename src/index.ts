@@ -1,12 +1,13 @@
 import express, { Express } from "express";
 import cors from "cors";
 import { router } from "./router";
+import { appConfig } from "config/appConfig";
 
 // import swaggerUi from "swagger-ui-express";
 // import swaggerDocument from "../swagger.json";
 
 const app: Express = express();
-const port = process.env.PORT || 3000;
+const port = appConfig.app.port || 3001;
 
 async function main() {
   app.use(cors());

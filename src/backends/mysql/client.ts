@@ -1,5 +1,5 @@
 import { injectable } from "inversify";
-import { access, mkdir } from "fs/promises";
+// import { access, mkdir } from "fs/promises";
 import mysql, {
   OkPacket,
   ResultSetHeader,
@@ -48,7 +48,7 @@ export class MySQLClient {
     //   await mkdir(`${this.uploadPath}/images`);
     // }
     connection.release();
-    await this.disconnect();
+    // await this.disconnect();
     // this.pool = mysql.createPool({
     //   connectionLimit: 10,
     //   ...appConfig.mysql,
@@ -98,14 +98,14 @@ export class MySQLClient {
       | OkPacket[]
       | ResultSetHeader
   ): any[] {
-    return (
-      [rows]
-        .map((row) =>
-          JSON.parse(JSON.stringify(row)).length ? { ...row } : undefined
-        )
-        .filter((elem) => elem !== undefined)
-        // handle BinaryRow
-        .map((elem) => Object.values(elem))[0]
-    );
+    const filteredRows = [rows]
+      .map((row) =>
+        JSON.parse(JSON.stringify(row)).length ? { ...row } : undefined
+      )
+      .filter((elem) => elem !== undefined);
+
+    return filteredRows.length
+      ? filteredRows.map((elem) => Object.values(elem))[0]
+      : [];
   }
 }

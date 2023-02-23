@@ -1,5 +1,7 @@
 import { inject, injectable } from "inversify";
 import jwt from "jsonwebtoken";
+
+import { appConfig } from "config/appConfig";
 import { hash, compare } from "utils/encryption";
 import { checkEmailDuplicate } from "utils/validation";
 import { AuthPayload } from "./model";
@@ -57,8 +59,10 @@ export class UserService {
   ): Promise<{ status: number; message: string; data?: any }> {
     const { email } = payload;
     const emailResult = await checkEmailDuplicate(email, this.mysqlClient);
+
     if (emailResult.status === 404) {
       const connection = await this.mysqlClient.getConnection();
+      console.log(payload);
       const createResult: any = await connection.query(
         "INSERT INTO user SET ?",
         payload
@@ -129,9 +133,11 @@ export class UserService {
         const tokenPayload = {
           userID: user.id,
           email: user.email,
-          userRole: user.role,
         };
-        const token = jwt.sign(tokenPayload, process.env.SECRET_KEY_JWT);
+        const token = jwt.sign(tokenPayload, appConfig.app.secret, {
+          expiresIn: appConfig.app.expiresIn,
+        });
+        console.log(token);
         return { status: 200, token: token };
       }
     }

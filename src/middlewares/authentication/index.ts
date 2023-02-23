@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { MySQLClient } from "backends/mysql/client";
+import { appConfig } from "config/appConfig";
 
 export const authMiddleware =
   (mysqlClient: MySQLClient) =>
@@ -13,10 +14,11 @@ export const authMiddleware =
 
     if (!token) {
       response.status(401).json({ status: 401, message: "No token provided" });
+      return;
     }
 
     try {
-      const decoded = jwt.verify(token, process.env.SECRET_KEY_JWT);
+      const decoded = jwt.verify(token, appConfig.app.secret);
       const { userID, email } = decoded as jwt.JwtPayload;
       request.user = { userID, email };
     } catch (error) {
