@@ -24,7 +24,7 @@ export class UserService {
 
     connection.release();
     const users = this.mysqlClient.processRows(rows);
-    if (users && users.length) {
+    if (users?.length) {
       const { password, ...data } = users[0];
       return {
         status: 200,
@@ -126,7 +126,7 @@ export class UserService {
     connection.release();
     const users: any[] = this.mysqlClient.processRows(rows);
 
-    if (users && users.length) {
+    if (users?.length) {
       const user = users[0];
       const match = await compare(password, user.password);
       if (match) {

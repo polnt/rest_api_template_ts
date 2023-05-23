@@ -5,7 +5,6 @@ import { UserService } from "./service";
 import TYPES from "../../IoC/types";
 import { AuthPayload } from "./model";
 
-
 @injectable()
 export class UserController {
   constructor(@inject(TYPES.UserService) private userService: UserService) {
